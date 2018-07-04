@@ -92,6 +92,8 @@ class BatchCompleted:
                  run_id: int,
                  external_ip: str,
                  status: BatchCompletionStatus,
+                 ads_found: int,
+                 requests: int,
                  host_hostname: str = None,
                  location: str = None,
                  timestamp: int = None):
@@ -104,7 +106,9 @@ class BatchCompleted:
         self.external_ip: str = external_ip
         self.location: str = location
         self.status: BatchCompletionStatus = status
-        self.timestamp = timestamp
+        self.ads_found: int = ads_found
+        self.requests: int = requests
+        self.timestamp: int = timestamp
         if self.timestamp is None:
             self.timestamp = utc_timestamp_seconds()
         if not isinstance(self.timestamp, numbers.Integral):
@@ -143,7 +147,9 @@ class BatchCompleted:
                               location=data["location"],
                               status=data["status"],
                               timestamp=data["timestamp"],
-                              external_ip=data["external_ip"])
+                              external_ip=data["external_ip"],
+                              ads_found=data["ads_found"],
+                              requests=data["requests"])
 
     def to_dict(self) -> dict:
         return deepcopy(self.__dict__)
