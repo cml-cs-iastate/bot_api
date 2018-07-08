@@ -5,8 +5,10 @@ from copy import deepcopy
 import time
 from typing import Optional, Union
 
+
 def utc_timestamp_seconds():
     return int(time.time())
+
 
 class InvalidBotCompletionStatus(Exception):
     '''Raised if an invalid bot completion status is given'''
@@ -42,11 +44,13 @@ class BatchStarted:
                  hostname: str,
                  external_ip: str,
                  run_id: int,
+                 video_list_size: int,
                  host_hostname: str = None,
                  location: str = None,
                  timestamp: int = None):
         self.event = BotEvents.BATCH_STARTED
         self.bots_started = bots_started
+        self.video_list_size = video_list_size
         self.hostname: str = hostname
         if not isinstance(run_id, numbers.Integral):
             raise TypeError(f"{run_id} is {run_id.__class__}, not a type of int")
@@ -75,6 +79,7 @@ class BatchStarted:
         data.pop("event")
         return BatchStarted(host_hostname=data["host_hostname"],
                             run_id=data["run_id"],
+                            video_list_size=data["video_list_size"],
                             hostname=data["hostname"],
                             location=data["location"],
                             bots_started=data["bots_started"],
