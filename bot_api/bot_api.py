@@ -5,6 +5,7 @@ from copy import deepcopy
 import time
 from typing import Optional, Union
 
+version = "0.8"
 
 def utc_timestamp_seconds():
     return int(time.time())
@@ -98,6 +99,7 @@ class BatchCompleted:
                  external_ip: str,
                  status: BatchCompletionStatus,
                  ads_found: int,
+                 bots_in_batch: int,
                  requests: int,
                  host_hostname: str = None,
                  location: str = None,
@@ -108,6 +110,7 @@ class BatchCompleted:
         self.event = BotEvents.BATCH_COMPLETED
         self.run_id: int = run_id
         self.host_hostname: str = host_hostname
+        self.bots_in_batch = bots_in_batch
         self.external_ip: str = external_ip
         self.location: str = location
         self.status: BatchCompletionStatus = status
@@ -149,6 +152,7 @@ class BatchCompleted:
         return BatchCompleted(host_hostname=data["host_hostname"],
                               run_id=data["run_id"],
                               hostname=data["hostname"],
+                              bots_in_batch=data["bots_in_batch"],
                               location=data["location"],
                               status=data["status"],
                               timestamp=data["timestamp"],
