@@ -101,6 +101,7 @@ class BatchCompleted:
                  ads_found: int,
                  bots_in_batch: int,
                  requests: int,
+                 video_list_size: int,
                  host_hostname: str = None,
                  location: str = None,
                  video_list_size: int,
