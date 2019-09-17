@@ -5,7 +5,7 @@ from copy import deepcopy
 import time
 from typing import Optional, Union
 
-version = "0.8"
+VERSION = "0.9"
 
 def utc_timestamp_seconds():
     return int(time.time())
@@ -101,6 +101,7 @@ class BatchCompleted:
                  ads_found: int,
                  bots_in_batch: int,
                  requests: int,
+                 video_list_size: int,
                  host_hostname: str = None,
                  location: str = None,
                  timestamp: int = None):
@@ -121,6 +122,7 @@ class BatchCompleted:
             self.timestamp = utc_timestamp_seconds()
         if not isinstance(self.timestamp, numbers.Integral):
             raise ValueError(f"`timestamp` passed wasn't an int: was `{type(timestamp)}`")
+        self.video_list_size = int(video_list_size)
 
     def has_location(self) -> bool:
         return self.location is not None and len(self.location) != 0
@@ -158,7 +160,8 @@ class BatchCompleted:
                               timestamp=data["timestamp"],
                               external_ip=data["external_ip"],
                               ads_found=data["ads_found"],
-                              requests=data["requests"])
+                              requests=data["requests"],
+                              video_list_size = int(data["video_list_size"]))
 
     def to_dict(self) -> dict:
         return deepcopy(self.__dict__)
