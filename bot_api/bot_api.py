@@ -59,9 +59,10 @@ class BatchStarted:
         self.host_hostname: str = host_hostname
         self.external_ip: str = external_ip
         self.location: str = location
-        self.timestamp = timestamp
-        if self.timestamp is None:
+        if timestamp is None:
             self.timestamp: int = utc_timestamp_seconds()
+        else:
+            self.timestamp: int = int(timestamp)
         if not isinstance(self.timestamp, numbers.Integral):
             raise ValueError(f"`timestamp` passed wasn't an int: was `{type(self.timestamp)}`")
 
@@ -102,10 +103,10 @@ class BatchCompleted:
                  bots_in_batch: int,
                  requests: int,
                  video_list_size: int,
-                 host_hostname: str = None,
-                 location: str = None,
-                 video_list_size: int,
-                 timestamp: int = None):
+                 host_hostname: Optional[str]= None,
+                 location: Optional[str] = None,
+                 timestamp: Optional[int] = None,
+                 ):
         self.hostname: str = hostname
         if not isinstance(run_id, numbers.Integral):
             raise TypeError(f"{run_id} is {run_id.__class__}, not a type of int")
